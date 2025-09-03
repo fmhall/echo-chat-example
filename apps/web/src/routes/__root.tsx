@@ -1,17 +1,18 @@
+import {
+	createRootRouteWithContext,
+	HeadContent,
+	Outlet,
+	useRouterState,
+} from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import Header from "@/components/header";
 import Loader from "@/components/loader";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import {
-	HeadContent,
-	Outlet,
-	createRootRouteWithContext,
-	useRouterState,
-} from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import "../index.css";
+import { EchoProvider } from "@merit-systems/echo-react-sdk";
 
-export interface RouterAppContext {}
+export type RouterAppContext = Record<string, never>;
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
 	component: RootComponent,
@@ -48,11 +49,17 @@ function RootComponent() {
 				disableTransitionOnChange
 				storageKey="vite-ui-theme"
 			>
-				<div className="grid grid-rows-[auto_1fr] h-svh">
-					<Header />
-					{isFetching ? <Loader /> : <Outlet />}
-				</div>
-				<Toaster richColors />
+				<EchoProvider
+					config={{
+						appId: "6bed2e5c-cde9-48ae-a8b9-275bfc349f5b",
+					}}
+				>
+					<div className="grid h-svh grid-rows-[auto_1fr]">
+						<Header />
+						{isFetching ? <Loader /> : <Outlet />}
+					</div>
+					<Toaster richColors />
+				</EchoProvider>
 			</ThemeProvider>
 			<TanStackRouterDevtools position="bottom-left" />
 		</>

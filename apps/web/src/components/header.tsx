@@ -1,8 +1,20 @@
+import {
+	EchoSignIn,
+	EchoTokenPurchase,
+	Logo,
+	useEcho,
+} from "@merit-systems/echo-react-sdk";
 import { Link } from "@tanstack/react-router";
+import { useTheme } from "next-themes";
 import { ModeToggle } from "./mode-toggle";
 
 export default function Header() {
-	const links = [{ to: "/", label: "Home" }] as const;
+	const links = [{ to: "/", label: "Echo" }] as const;
+
+	const { theme } = useTheme();
+	const { isAuthenticated } = useEcho();
+
+	console.log(theme);
 
 	return (
 		<div>
@@ -11,12 +23,21 @@ export default function Header() {
 					{links.map(({ to, label }) => {
 						return (
 							<Link key={to} to={to}>
-								{label}
+								<div className="flex items-center gap-2">
+									<Logo
+										width={24}
+										height={24}
+										variant={theme as "light" | "dark"}
+									/>
+									{label}
+								</div>
 							</Link>
 						);
 					})}
 				</nav>
 				<div className="flex items-center gap-2">
+					{!isAuthenticated && <EchoSignIn />}
+					{isAuthenticated && <EchoTokenPurchase />}
 					<ModeToggle />
 				</div>
 			</div>
