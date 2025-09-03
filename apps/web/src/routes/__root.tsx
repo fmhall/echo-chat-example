@@ -12,6 +12,9 @@ import { Toaster } from "@/components/ui/sonner";
 import "../index.css";
 import { EchoProvider } from "@merit-systems/echo-react-sdk";
 
+// get app id from environment variables
+const appId = import.meta.env.VITE_ECHO_APP_ID;
+
 export type RouterAppContext = Record<string, never>;
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -51,7 +54,7 @@ function RootComponent() {
 			>
 				<EchoProvider
 					config={{
-						appId: "6bed2e5c-cde9-48ae-a8b9-275bfc349f5b",
+						appId,
 					}}
 				>
 					<div className="grid h-svh grid-rows-[auto_1fr]">
