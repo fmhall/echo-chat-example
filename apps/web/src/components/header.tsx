@@ -36,7 +36,14 @@ export default function Header() {
 					})}
 				</nav>
 				<div className="flex items-center gap-2">
-					{!isAuthenticated && <EchoSignIn />}
+					{!isAuthenticated && (
+						<div 
+							onClick={(e) => console.log('EchoSignIn container clicked', e)}
+							style={{ position: 'relative', zIndex: 10 }}
+						>
+							<EchoSignIn />
+						</div>
+					)}
 					{isAuthenticated && <EchoTokenPurchase />}
 					<ModeToggle />
 				</div>
