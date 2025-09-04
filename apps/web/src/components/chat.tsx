@@ -1,6 +1,7 @@
 import {
 	EchoChatProvider,
 	useChat,
+	useEcho,
 	useEchoModelProviders,
 } from "@merit-systems/echo-react-sdk";
 import { type ModelMessage, streamText } from "ai";
@@ -107,7 +108,7 @@ export function Chat() {
 
 export default function ChatProvider() {
 	const { openai } = useEchoModelProviders();
-
+	const { token } = useEcho();
 	const chatFn = async ({
 		modelMessages,
 		abortSignal,
@@ -123,7 +124,7 @@ export default function ChatProvider() {
 		return result.toUIMessageStream();
 	};
 	return (
-		<EchoChatProvider chatFn={chatFn}>
+		<EchoChatProvider chatFn={chatFn} key={token}>
 			<Chat />
 		</EchoChatProvider>
 	);
